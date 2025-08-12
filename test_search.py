@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from datetime import date
 
 BASE_URL = "https://www.esky.hu/"
-TIMEOUT = 10
+TIMEOUT = 13
 
 SEARCH_FORM = (By.ID, "qsf_form")
 ROUNDTRIP_RADIO = (By.ID, "TripTypeRoundtrip")
@@ -19,8 +19,10 @@ CALENDAR_TODAY = (By.XPATH, "//div[@id='ui-datepicker-div']//td[contains(@class,
 CITY_LIST_PARTIAL = ["Buda", "Kath"]
 AIRPORT_IATA = ["BUD", "KTM"]
 
-def test_simple_seach(driver):
+def test_simple_search(driver):
     driver.get(BASE_URL)
+
+    driver.delete_all_cookies()
     accept_cookies(driver)
 
     WebDriverWait(driver, TIMEOUT).until(
