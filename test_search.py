@@ -1,14 +1,8 @@
-from time import sleep
-from selenium.webdriver.common.keys import Keys
-import pytest
 from handle_cookies import accept_cookies
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import logging
 from datetime import date
-
-logging.basicConfig(level=logging.INFO)
 
 BASE_URL = "https://www.esky.hu/"
 TIMEOUT = 10
@@ -25,17 +19,13 @@ CALENDAR_TODAY = (By.XPATH, "//div[@id='ui-datepicker-div']//td[contains(@class,
 CITY_LIST_PARTIAL = ["Buda", "Kath"]
 AIRPORT_IATA = ["BUD", "KTM"]
 
-###
-# Tesztelve: Madag-TNR, Kath-KTM, 
-###
-
 def test_simple_seach(driver):
     driver.get(BASE_URL)
     accept_cookies(driver)
 
     WebDriverWait(driver, TIMEOUT).until(
         EC.visibility_of_element_located(SEARCH_FORM),
-        message="Quick search is not displayed"
+        message="Quick search form is not displayed"
     )
 
     roundtrip_radio = WebDriverWait(driver, TIMEOUT).until(
