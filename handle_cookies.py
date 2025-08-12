@@ -2,29 +2,24 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-
-def _shadow_query(driver, host_selector, inner_selector):
-    return driver.execute_script("""
-const host = document.querySelector(arguments[0]);
-if(!host || !host.shadowRoot) return null;
-return host.shadowRoot.querySelector(arguments[1]);
-""", host_selector, inner_selector)
-
-def _wait_for_uc_dialouge(driver, host_sel, inner_sel, timeout=10):
-    return WebDriverWait(driver, timeout).until(
-        lambda d: (el := _shadow_query(d, host_sel, inner_sel)) and el.is_displayed() and el
-    )
-
-def _wait_for_accept_btn(driver, host_sel, inner_sel, timeout=10):
-    return WebDriverWait(driver, timeout).until(
-        lambda d: (el := _shadow_query(d, host_sel, inner_sel)) and el.is_displayed() and el.is_enabled() and el
-    )
+HOST = (By.CSS_SELECTOR, "#usercentrics-root")
+DIALOG = (By.CSS_SELECTOR, "div[data-testid='uc-container']")
+ACCEPT_BTN = (By.CSS_SELECTOR, "button[data-testid='uc-accept-all-button']")
 
 def accept_cookies(driver, timeout=15):
-    host = "#usercentrics-root"
-    dialog_selector = "div[data-testid='uc-container']"
-    button_selector = "button[data-testid='uc-accept-all-button']"
+    host = WebDriverWait(driver, timeout).until(
+        EC.presence_of_element_located(HOST),
+        "Usercentrics host not present"
+    )
+    shadow = host.shadow_root
 
-    _wait_for_uc_dialouge(driver, host, dialog_selector, timeout)
-    btn = _wait_for_accept_btn(driver, host, button_selector, timeout)
+    WebDriverWait(driver, timeout).until(
+        lambda d: (el := shadow.find_element(*DIALOG)) and el.is_displayed(),
+        "Cookie dialog not visible"
+    )
+
+    btn = WebDriverWait(driver, timeout).until(
+        lambda d: (el := shadow.find_element(*ACCEPT_BTN)) and el.is_displayed() and el.is_enabled() and el,
+        "Accept button not clickable"
+    )
     btn.click()
