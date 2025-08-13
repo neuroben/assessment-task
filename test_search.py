@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from datetime import date
 
 BASE_URL = "https://www.esky.hu/"
-TIMEOUT = 13
+TIMEOUT = 15
 
 SEARCH_FORM = (By.ID, "qsf_form")
 ROUNDTRIP_RADIO = (By.ID, "TripTypeRoundtrip")
@@ -85,7 +85,9 @@ def pick_airport(driver, input_locator, text_partial, iata):
         )
 
         input.click()
-        input.send_keys(str(text_partial))
+        for char in str(text_partial):
+            input.send_keys(char)
+            driver.implicitly_wait(0.05)
 
         target = WebDriverWait(driver, TIMEOUT).until(
             lambda d: next((e for e in d.find_elements(By.CSS_SELECTOR, f"a[data-city-code='{iata}']") if e.is_displayed()), None),
