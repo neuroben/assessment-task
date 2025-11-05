@@ -1,2 +1,3 @@
-selenium==4.34.2
-pytest==8.4.1
+https://www.esky.hu/flights/search/ap/VIE/ap/BUD?departureDate=2025-08-12
+
+&sc=economy&pa=1&py=0&pc=0&pi=0&_gl=1*gzgzag*_up*MQ..*_ga*MTg0OTMxMjYxNC4xNzU1MDI2NDU1*_ga_HB1L14MN0C*czE3NTUwMjY0NTMkbzEkZzAkdDE3NTUwMjY0NTMkajYwJGwwJGgxMzAyNTQ2MTAy*_ga_N9CRQD0ZQC*czE3NTUwMjY0NTMkbzEkZzAkdDE3NTUwMjY0NTMkajYwJGwwJGg5ODgzNzM4MTA.*_ga_8LKM4485PG*czE3NTUwMjY0NTMkbzEkZzAkdDE3NTUwMjY0NTMkajYwJGwwJGg4NDk5MjM0Njc.

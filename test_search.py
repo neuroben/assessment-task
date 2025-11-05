@@ -95,9 +95,3 @@ def pick_airport(driver, input_locator, text_partial, iata):
         )
 
         target.click()
-
-
-
-
-    
-
